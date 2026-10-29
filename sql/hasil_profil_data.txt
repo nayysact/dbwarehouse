@@ -1,0 +1,31 @@
+             tabel             | jumlah_baris 
+-------------------------------+--------------
+ production.productcategory    |            4
+ production.location           |           14
+ production.scrapreason        |           16
+ production.productsubcategory |           37
+ production.product            |          504
+ production.workorder          |        72591
+ production.workorderrouting   |        67131
+(7 rows)
+
+  mulai_paling_awal  | mulai_paling_akhir  | selesai_paling_awal | selesai_paling_akhir | jatuh_tempo_paling_awal | jatuh_tempo_paling_akhir 
+---------------------+---------------------+---------------------+----------------------+-------------------------+--------------------------
+ 2011-06-03 00:00:00 | 2014-06-02 00:00:00 | 2011-06-13 00:00:00 | 2014-06-17 00:00:00  | 2011-06-14 00:00:00     | 2014-06-13 00:00:00
+(1 row)
+
+ total_baris | enddate_null | scrapreasonid_null | work_order_ada_scrap 
+-------------+--------------+--------------------+----------------------
+       72591 |            0 |              71862 |                  729
+(1 row)
+
+ total_baris | actualstartdate_null | actualenddate_null | actualresourcehrs_null 
+-------------+----------------------+--------------------+------------------------
+       67131 |                    0 |                  0 |                      0
+(1 row)
+
+ calon_baris_fakta 
+-------------------
+             72591
+(1 row)
+
