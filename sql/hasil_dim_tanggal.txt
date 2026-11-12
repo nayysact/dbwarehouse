@@ -1,0 +1,27 @@
+﻿DROP TABLE
+CREATE TABLE
+INSERT 0 2191
+INSERT 0 1
+COMMENT
+ jumlah_baris 
+--------------
+         2192
+(1 row)
+
+    awal    |   akhir    
+------------+------------
+ 2010-01-01 | 2015-12-31
+(1 row)
+
+ tanggal_key |  tanggal   | tahun | semester | kuartal | bulan | nama_bulan | minggu_dalam_tahun | tanggal_dalam_bulan | hari_dalam_minggu | nama_hari | is_akhir_pekan 
+-------------+------------+-------+----------+---------+-------+------------+--------------------+---------------------+-------------------+-----------+----------------
+    20130315 | 2013-03-15 |  2013 |        1 |       1 |     3 | Maret      |                 11 |                  15 |                 5 | Jumat     | f
+(1 row)
+
+  tanggal   | nama_hari | minggu_dalam_tahun 
+------------+-----------+--------------------
+ 2010-01-01 | Jumat     |                 53
+ 2011-01-01 | Sabtu     |                 52
+ 2012-01-01 | Minggu    |                 52
+(3 rows)
+
