@@ -103,3 +103,27 @@ Sumber utama: production.workorderrouting
 8. fact\_produksi  
 9. fact\_produksi\_tahap  
 10. Rekonsiliasi dengan sumber: 72.591 baris fakta produksi, 67.131 baris fakta tahap, total orderqty dan scrappedqty sama
+
+## Daftar Tabel Staging
+
+| Tabel staging | Tabel sumber | Kolom yang diambil | Dipakai untuk | Jumlah baris |
+|---|---|---|---|---|
+| `stg_workorder` | `production.workorder` | workorderid, productid, orderqty, stockedqty, scrappedqty, startdate, enddate, duedate, scrapreasonid | `fact_produksi`; startdate juga dipakai pencarian `produk_key` di `fact_produksi_tahap` | 72.591 |
+| `stg_workorderrouting` | `production.workorderrouting` | workorderid, operationsequence, locationid, scheduledstartdate, scheduledenddate, actualstartdate, actualenddate, actualresourcehrs, plannedcost, actualcost | `fact_produksi_tahap` | 67.131 |
+| `stg_product` | `production.product` | productid, name, productnumber, color, productsubcategoryid, standardcost, listprice, sellstartdate | `dim_produk` | 504 |
+| `stg_productsubcategory` | `production.productsubcategory` | productsubcategoryid, productcategoryid, name | `dim_produk` (kolom subkategori) | 37 |
+| `stg_productcategory` | `production.productcategory` | productcategoryid, name | `dim_produk` (kolom kategori) | 4 |
+| `stg_productcosthistory` | `production.productcosthistory` | productid, startdate, enddate, standardcost | `dim_produk` (SCD tipe 2: biaya_standar) | 395 |
+| `stg_productlistpricehistory` | `production.productlistpricehistory` | productid, startdate, enddate, listprice | `dim_produk` (SCD tipe 2: harga_jual) | 395 |
+| `stg_scrapreason` | `production.scrapreason` | scrapreasonid, name | `dim_alasan_scrap` | 16 |
+| `stg_location` | `production.location` | locationid, name, costrate, availability | `dim_lokasi` | 14 |
+
+### Pembersihan di staging 
+
+| Tabel staging | Aturan |
+|---|---|
+| `stg_workorder` | `enddate` kosong tetap NULL (dipakai aturan NULL `lama_produksi_hari` dan `hari_terlambat`). `scrapreasonid` kosong menjadi key 0 "Tidak ada scrap" saat lookup. Tanggal diubah ke format YYYYMMDD. |
+| `stg_workorderrouting` | Tanggal kosong menjadi key -1. Biaya dan jam kosong menjadi 0. Selisih dan durasi tetap NULL bila salah satu kolom asal kosong. |
+| `stg_product` | `color` kosong menjadi "Tidak ada". `productsubcategoryid` kosong menjadi "Tanpa kategori" lewat LEFT JOIN. |
+| `stg_productcosthistory`, `stg_productlistpricehistory` | `enddate` kosong menjadi 9999-12-31. Produk tanpa riwayat memakai `standardcost` dan `listprice` dari `stg_product`. |
+| `stg_scrapreason`, `stg_location` | Tidak ada pembersihan khusus. Baris default (-1 dan 0) dibuat di dimensi, bukan di staging. |
